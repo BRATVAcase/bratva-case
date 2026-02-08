@@ -5,57 +5,109 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BRATVA Case</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+
 <style>
 body{
   margin:0;
-  font-family:Arial, Helvetica, sans-serif;
-  background:#f2f2f2;
+  font-family:'Montserrat',sans-serif;
+  background:#0b0b0b;
+  color:#fff;
 }
 header{
+  padding:30px 20px;
+  text-align:center;
+  border-bottom:1px solid #222;
+}
+header h1{
+  margin:0;
+  font-weight:800;
+  letter-spacing:4px;
+}
+header span{
+  color:#c40000;
+}
+header p{
+  margin-top:10px;
+  color:#aaa;
+}
+
+.products{
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:30px;
+  padding:40px 20px 140px;
+}
+
+.card{
   background:#111;
-  color:#fff;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 15px 40px rgba(0,0,0,.7);
+}
+
+.card img{
+  width:100%;
+  height:300px;
+  object-fit:cover;
+}
+
+.card-content{
   padding:20px;
   text-align:center;
 }
-.products{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:15px;
-  padding:15px;
-}
-.card{
-  background:#fff;
-  border-radius:10px;
-  padding:10px;
-}
-.card img{
-  width:100%;
-  border-radius:10px;
-}
+
 .card h3{
-  margin:10px 0 5px;
+  margin:10px 0 6px;
+  font-weight:700;
+  letter-spacing:1px;
 }
-.card p{
-  margin:5px 0;
+
+.symbol{
+  font-size:28px;
+  color:#c40000;
 }
-button{
-  background:#111;
-  color:#fff;
-  border:none;
-  padding:10px;
+
+.price{
+  margin:12px 0 15px;
+  font-weight:600;
+  color:#ddd;
+}
+
+select{
   width:100%;
-  border-radius:8px;
-  font-size:16px;
+  padding:12px;
+  border-radius:12px;
+  border:none;
+  margin:10px 0;
+  font-family:inherit;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:14px;
+  background:#c40000;
+  color:#fff;
+  font-size:15px;
+  font-weight:600;
   cursor:pointer;
 }
+button:hover{
+  background:#ff0000;
+}
+
 .cart{
   position:fixed;
   bottom:0;
   left:0;
   right:0;
-  background:#fff;
-  padding:10px;
-  border-top:1px solid #ccc;
+  background:#000;
+  padding:15px;
+  border-top:1px solid #222;
 }
 </style>
 </head>
@@ -63,31 +115,43 @@ button{
 <body>
 
 <header>
-  <h1>BRATVA Case</h1>
-  <p>Huse iPhone • Comandă online Moldova</p>
+  <h1>BRATVA <span>CASE</span></h1>
+  <p>Huse iPhone • Dark Edition • Moldova</p>
 </header>
 
-<div class="products">
+<section class="products">
 
   <div class="card">
-    <img src="https://via.placeholder.com/300">
-    <h3>Husă iPhone Transparentă</h3>
-    <p>149 MDL</p>
-    <button onclick="add('Husă Transparentă – 149 MDL')">
-      Adaugă în coș
-    </button>
+    <img src="https://images.unsplash.com/photo-1580915411954-282cb1b0d780">
+    <div class="card-content">
+      <div class="symbol">♠</div>
+      <h3>BRATVA SPADES</h3>
+
+      <select id="model">
+        <option value="">Alege model iPhone</option>
+        <option>iPhone 11</option>
+        <option>iPhone 11 Pro</option>
+        <option>iPhone 11 Pro Max</option>
+        <option>iPhone 12</option>
+        <option>iPhone 12 Pro</option>
+        <option>iPhone 12 Pro Max</option>
+        <option>iPhone 13</option>
+        <option>iPhone 13 Pro</option>
+        <option>iPhone 13 Pro Max</option>
+        <option>iPhone 14</option>
+        <option>iPhone 14 Pro</option>
+        <option>iPhone 14 Pro Max</option>
+        <option>iPhone 15</option>
+        <option>iPhone 15 Pro</option>
+        <option>iPhone 15 Pro Max</option>
+      </select>
+
+      <div class="price">249 MDL</div>
+      <button onclick="addProduct()">Adaugă în coș</button>
+    </div>
   </div>
 
-  <div class="card">
-    <img src="https://via.placeholder.com/300">
-    <h3>Husă iPhone Neagră</h3>
-    <p>179 MDL</p>
-    <button onclick="add('Husă Neagră – 179 MDL')">
-      Adaugă în coș
-    </button>
-  </div>
-
-</div>
+</section>
 
 <div class="cart">
   <button onclick="order()">Plasează comanda</button>
@@ -96,8 +160,13 @@ button{
 <script>
 let cart = [];
 
-function add(product){
-  cart.push(product);
+function addProduct(){
+  let model = document.getElementById("model").value;
+  if(!model){
+    alert("Alege modelul iPhone");
+    return;
+  }
+  cart.push("BRATVA ♠ – " + model + " – 249 MDL");
   alert("Produs adăugat în coș");
 }
 
@@ -106,8 +175,8 @@ function order(){
     alert("Coșul este gol");
     return;
   }
-  let msg = "🛒 Comandă nouă BRATVA Case:%0A" + cart.join("%0A");
-  window.open("https://wa.me/37367413183?text=" + msg);
+  let msg = "🖤 COMANDĂ BRATVA CASE ♠:%0A" + cart.join("%0A");
+  window.open("https://wa.me/3736XXXXXXX?text=" + msg);
 }
 </script>
 
